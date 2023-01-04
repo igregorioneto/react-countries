@@ -16,7 +16,7 @@ export default function CountryPages(params) {
   function toggleVisitedCountries(country) {
     let newVisitedCountries = [...visitedCountries];
 
-    const isCountryVisited = newVisitedCountries.indexOf(country !== -1);
+    const isCountryVisited = newVisitedCountries.indexOf(country) !== -1;
 
     if (isCountryVisited) {
       newVisitedCountries = newVisitedCountries.filter(visitedCountry => {
@@ -47,7 +47,12 @@ export default function CountryPages(params) {
           onInputChange={handleCountryFilterChange}
           autoFocus
         />
-        <Countries onClickCountry={toggleVisitedCountries}>{filteredCountries}</Countries>
+        <Countries
+          visitedCountries={visitedCountries}
+          onClickCountry={toggleVisitedCountries}
+        >
+            {filteredCountries}
+        </Countries>
       </Main>
     </div>
   )

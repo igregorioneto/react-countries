@@ -2,7 +2,8 @@ import Item from "./Item";
 
 export default function Country({
   children: country=null,
-  onClickCountry=null
+  onClickCountry=null,
+  isVisited=false,
 }) {
   if (!country) {
     return <div>Impossível renderizar o pais</div>
@@ -18,9 +19,11 @@ export default function Country({
 
   const demographicDensity = population / area;
 
+  const isVisitedClass = isVisited ? 'bg-green-100' : '';
+
   return(
     <div 
-      className="border p-2 m-2 flex flex-row itens-center space-x-2"
+      className={`border p-2 m-2 flex flex-row itens-center space-x-2 cursor-pointer ${isVisitedClass}`}
       onClick={handleClickCountry}
       >
       <img className="w-48" src="../assets/image-not-found.jpg" alt={name} />
