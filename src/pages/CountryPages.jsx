@@ -3,15 +3,33 @@ import Header from "../components/Header";
 import Main from "../components/Main";
 import TextInput from "../components/TextInput";
 import { allCountries } from "../data/allCountries";
+import Countries from "../components/Countries";
 
 export default function CountryPages(params) {
-  const [countryFilter, setCountryFilter] = useState('Brazil');
+  const [countryFilter, setCountryFilter] = useState('');
+  const [visitedCountries, setVisitedCountries] = useState([]);
 
   function handleCountryFilterChange(newCountryFilter) {
     setCountryFilter(newCountryFilter);
   }
 
-  const countryFilterLowercase = countryFilter.toLowerCase();
+  function toggleVisitedCountries(country) {
+    let newVisitedCountries = [...visitedCountries];
+
+    const isCountryVisited = newVisitedCountries.indexOf(country !== -1);
+
+    if (isCountryVisited) {
+      newVisitedCountries = newVisitedCountries.filter(visitedCountry => {
+        return visitedCountry !== country
+      })
+    } else {
+      newVisitedCountries.push(country);
+    }
+
+    setVisitedCountries(newVisitedCountries);
+  }
+
+  const countryFilterLowercase = countryFilter.trim().toLowerCase();
 
   const filteredCountries = countryFilterLowercase.length >= 3 ?
     allCountries.filter(({name}) => {
@@ -29,6 +47,7 @@ export default function CountryPages(params) {
           onInputChange={handleCountryFilterChange}
           autoFocus
         />
+        <Countries onClickCountry={toggleVisitedCountries}>{filteredCountries}</Countries>
       </Main>
     </div>
   )
